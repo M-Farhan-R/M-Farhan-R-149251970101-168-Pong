@@ -1,6 +1,6 @@
-/Assets/
-/Packages/
-/ProjectSettings/
+/[Aa]ssets/
+/[Pp]ackages/
+/[Pp]rojectSettings/
 .vscode
 # This .gitignore file should be placed at the root of your Unity project directory
 #
