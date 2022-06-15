@@ -32,5 +32,8 @@ public class BallControl : MonoBehaviour
         random();
     }
 
-    
+    public void BallSpeedUp(float magnitude)
+    {
+        rig.velocity *= magnitude;
+    }
 }
