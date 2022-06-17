@@ -11,13 +11,19 @@ public class PUManager : MonoBehaviour
 
     //Menampung banyak clone dari komponen SpeedUp
     private List<GameObject> PUList;
+    
+    public int maxPUBallList;
 
     //Sebagai wadah spawn(?)
     public Transform spawnArea;
     
-    public int maxPUList;
     private float timer;
-    public int spawnInterval;
+    public int spawnPUBallInterval, despawnPUBallInterval;
+
+    public Coroutine ballCoroutine;
+
+    //untuk cek coroutine start
+    public bool ballStartCoroutine;
 
     void Start()
     {
@@ -29,12 +35,25 @@ public class PUManager : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (timer > spawnInterval)
+        if (timer > spawnPUBallInterval)
         {
             GenerateRandomPU();
-            timer -= spawnInterval;
+            timer -= spawnPUBallInterval;
+            
         }
     }
+    
+    IEnumerator DespawnBall()
+    {
+        //
+        ballStartCoroutine = true;
+        Debug.Log("Enter Despawn Countdown");
+        yield return new WaitForSeconds(despawnPUBallInterval);
+        Debug.Log("After seconds");
+        RemovePU(PUList[0]);
+        ballStartCoroutine = false;
+    }
+
     public void GenerateRandomPU()
     {
         GenerateRandomPU(new Vector3(Random.Range(PUAreaMin.x, PUAreaMax.x),
@@ -44,7 +63,7 @@ public class PUManager : MonoBehaviour
 
     public void GenerateRandomPU(Vector3 position)
     {
-        if (PUList.Count >= maxPUList)
+        if (PUList.Count >= maxPUBallList)
         {
             return;
         }
@@ -63,7 +82,11 @@ public class PUManager : MonoBehaviour
         PU.SetActive(true);
 
         PUList.Add(PU);
-
+        
+        if (!ballStartCoroutine)
+        {
+            ballCoroutine = StartCoroutine(DespawnBall());
+        }
     }
 
     public void RemovePU(GameObject PU)

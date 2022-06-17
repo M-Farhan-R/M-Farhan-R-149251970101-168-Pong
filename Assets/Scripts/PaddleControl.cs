@@ -30,12 +30,12 @@ public class PaddleControl : MonoBehaviour
          if (Input.GetKey(up))
         {
             move = Vector2.up * speed;
-            Debug.Log("Speed Paddle = " + move.y);
+            // Debug.Log("Speed Paddle = " + move.y);
             
         } else if (Input.GetKey(down))
         {
             move = Vector2.down * speed;
-            Debug.Log("Speed Paddle = " + move.y);
+            // Debug.Log("Speed Paddle = " + move.y);
         }
 
         return move;

@@ -14,6 +14,9 @@ public class PUBallSpeedUp : MonoBehaviour
         {
             ball.GetComponent<BallControl>().BallSpeedUp(magnitude);
             manager.RemovePU(gameObject);
+            manager.ballStartCoroutine = false;
+            manager.StopCoroutine(manager.ballCoroutine);
+            
         }
     }
 }
