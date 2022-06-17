@@ -10,16 +10,15 @@ public class PUManager : MonoBehaviour
     public List<GameObject> PUTemplate;
 
     //Menampung banyak clone dari komponen SpeedUp
-    private List<GameObject> PUList;
+    private List<GameObject> BallPUList, PaddleSpdPUList, PaddleLengthPUList;
     
-    public int maxPUBallList;
+    public int maxBallPUList, maxPaddleSpdPUList, maxPaddleLengthPUList;
 
     //Sebagai wadah spawn(?)
     public Transform spawnArea;
     
-    private float timer;
-    public int spawnPUBallInterval, despawnPUBallInterval;
-
+    private float ballPUTimer;
+    public int spawnBallPUInterval, despawnBallPUInterval;
     public Coroutine ballCoroutine;
 
     //untuk cek coroutine start
@@ -27,18 +26,18 @@ public class PUManager : MonoBehaviour
 
     void Start()
     {
-        PUList = new List<GameObject>();
-        timer = 0;
+        BallPUList = new List<GameObject>();
+        ballPUTimer = 0;
     }
 
     void Update()
     {
-        timer += Time.deltaTime;
+        ballPUTimer += Time.deltaTime;
 
-        if (timer > spawnPUBallInterval)
+        if (ballPUTimer > spawnBallPUInterval)
         {
-            GenerateRandomPU();
-            timer -= spawnPUBallInterval;
+            GenerateRandomBallPU();
+            ballPUTimer -= spawnBallPUInterval;
             
         }
     }
@@ -48,22 +47,22 @@ public class PUManager : MonoBehaviour
         //
         ballStartCoroutine = true;
         Debug.Log("Enter Despawn Countdown");
-        yield return new WaitForSeconds(despawnPUBallInterval);
+        yield return new WaitForSeconds(despawnBallPUInterval);
         Debug.Log("After seconds");
-        RemovePU(PUList[0]);
+        RemoveBallPU(BallPUList[0]);
         ballStartCoroutine = false;
     }
 
-    public void GenerateRandomPU()
+    public void GenerateRandomBallPU()
     {
-        GenerateRandomPU(new Vector3(Random.Range(PUAreaMin.x, PUAreaMax.x),
+        GenerateRandomBallPU(new Vector3(Random.Range(PUAreaMin.x, PUAreaMax.x),
                                     Random.Range(PUAreaMin.y, PUAreaMax.y),
                                     0));
     }
 
-    public void GenerateRandomPU(Vector3 position)
+    public void GenerateRandomBallPU(Vector3 position)
     {
-        if (PUList.Count >= maxPUBallList)
+        if (BallPUList.Count >= maxBallPUList)
         {
             return;
         }
@@ -76,12 +75,12 @@ public class PUManager : MonoBehaviour
             return;
         }
         
-        int randomIndex = Random.Range(0, PUList.Count);
+        int randomIndex = Random.Range(0, BallPUList.Count);
     
-        GameObject PU = Instantiate(PUTemplate[randomIndex], position, Quaternion.identity, spawnArea);
-        PU.SetActive(true);
+        GameObject ballPU = Instantiate(PUTemplate[randomIndex], position, Quaternion.identity, spawnArea);
+        ballPU.SetActive(true);
 
-        PUList.Add(PU);
+        BallPUList.Add(ballPU);
         
         if (!ballStartCoroutine)
         {
@@ -89,17 +88,19 @@ public class PUManager : MonoBehaviour
         }
     }
 
-    public void RemovePU(GameObject PU)
+    public void RemoveBallPU(GameObject PU)
     {
-        PUList.Remove(PU);
+        BallPUList.Remove(PU);
         Destroy(PU);
+        ballStartCoroutine = false;
+        StopCoroutine(ballCoroutine);
     }
 
     public void RemoveAllPU()
     {
-        while (PUList.Count > 0)
+        while (BallPUList.Count > 0)
         {
-            RemovePU(PUList[0]);
+            RemoveBallPU(BallPUList[0]);
         }
     }
 }

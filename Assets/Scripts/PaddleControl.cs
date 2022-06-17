@@ -50,4 +50,14 @@ public class PaddleControl : MonoBehaviour
         rig.velocity = Vector2.zero;
         transform.position = startPosition;
     }
+
+    public void PaddleLengthUp()
+    {
+
+    }
+
+    public void PaddleSpeedUp()
+    {
+        
+    }
 }

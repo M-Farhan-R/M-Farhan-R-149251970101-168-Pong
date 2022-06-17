@@ -13,7 +13,7 @@ public class PUBallSpeedUp : MonoBehaviour
         if (collision == ball)
         {
             ball.GetComponent<BallControl>().BallSpeedUp(magnitude);
-            manager.RemovePU(gameObject);
+            manager.RemoveBallPU(gameObject);
             manager.ballStartCoroutine = false;
             manager.StopCoroutine(manager.ballCoroutine);
             

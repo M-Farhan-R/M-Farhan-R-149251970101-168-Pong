@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BallControl : MonoBehaviour
 {
-    public int speed;
+    public float speed;
     private Rigidbody2D rig;
     private Vector3 startPosition;
     // Start is called before the first frame update
