@@ -14,8 +14,8 @@ public class PUPaddleLengthUp : MonoBehaviour
 
         if (collision == ball)
         {
-            StartCoroutine(paddleL.GetComponent<PaddleControl>().PaddleLengthUp(lengthMultiplier));
-            // paddleR.startPaddleLengthUp(lengthMultiplier);
+            paddleL.GetComponent<PaddleControl>().startPaddleLengthUp(lengthMultiplier);
+            paddleR.GetComponent<PaddleControl>().startPaddleLengthUp(lengthMultiplier);
             manager.RemovePaddleLengthPU(gameObject);
             manager.paddleLengthStartCoroutine = false;
             manager.StopCoroutine(manager.paddleLengthCoroutine);

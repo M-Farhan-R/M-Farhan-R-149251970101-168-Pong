@@ -686,7 +686,7 @@ MonoBehaviour:
   - {fileID: 1760408433}
   maxBallPUList: 0
   maxPaddleSpdPUList: 0
-  maxPaddleLengthPUList: 2
+  maxPaddleLengthPUList: 6
   spawnArea: {fileID: 1408542528}
   spawnBallPUInterval: 2
   spawnPaddleSpdPUInterval: 3

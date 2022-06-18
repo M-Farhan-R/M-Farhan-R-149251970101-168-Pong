@@ -9,7 +9,8 @@ public class PaddleControl : MonoBehaviour
     public KeyCode up,down;
     private Vector3 startPosition, startScale;
     private float spdMultiplier;
-    public Coroutine paddleLeftCoroutine, paddleRightCoroutine;
+    public Coroutine paddleLengthCoroutine, paddleSpdCoroutine;
+    private bool paddleLengthStartCoroutine;
 
     // Start is called before the first frame update
     void Start()
@@ -57,15 +58,21 @@ public class PaddleControl : MonoBehaviour
 
     public void startPaddleLengthUp(float multiplier)
     {
-        paddleLeftCoroutine = StartCoroutine(PaddleLengthUp(multiplier));
+        if (paddleLengthStartCoroutine)
+        {
+            return;
+        }
+        paddleLengthCoroutine = StartCoroutine(PaddleLengthUp(multiplier));
     }
 
     public IEnumerator PaddleLengthUp(float multiplier)
     {
-        // transform.localScale *= multiplier;
-        yield return new WaitForSeconds(1f);
+        paddleLengthStartCoroutine = true;
+        transform.localScale *= multiplier;
+        yield return new WaitForSeconds(5);
         transform.localScale = startScale;
         Debug.Log(startPosition);
+        paddleLengthStartCoroutine = false;
     }
 
     IEnumerator PaddleSpeedUp(float multiplier)
