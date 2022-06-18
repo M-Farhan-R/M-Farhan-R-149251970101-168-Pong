@@ -7,12 +7,16 @@ public class PaddleControl : MonoBehaviour
     private Rigidbody2D rig;
     public int speed;
     public KeyCode up,down;
-    private Vector3 startPosition;
+    private Vector3 startPosition, startScale;
+    private float spdMultiplier;
+    public Coroutine paddleLeftCoroutine, paddleRightCoroutine;
 
     // Start is called before the first frame update
     void Start()
     {
+        startScale = transform.localScale;
         startPosition = transform.position;
+        spdMultiplier = 1;
         rig = GetComponent<Rigidbody2D>();
     }
 
@@ -43,7 +47,7 @@ public class PaddleControl : MonoBehaviour
 
     //setMove
     void setObjMovement(Vector2 move){
-        rig.velocity = (move);
+        rig.velocity = move * spdMultiplier;
     }
 
     public void Reset(){
@@ -51,13 +55,23 @@ public class PaddleControl : MonoBehaviour
         transform.position = startPosition;
     }
 
-    public void PaddleLengthUp()
+    public void startPaddleLengthUp(float multiplier)
     {
-
+        paddleLeftCoroutine = StartCoroutine(PaddleLengthUp(multiplier));
     }
 
-    public void PaddleSpeedUp()
+    public IEnumerator PaddleLengthUp(float multiplier)
     {
-        
+        // transform.localScale *= multiplier;
+        yield return new WaitForSeconds(1f);
+        transform.localScale = startScale;
+        Debug.Log(startPosition);
+    }
+
+    IEnumerator PaddleSpeedUp(float multiplier)
+    {
+        spdMultiplier = multiplier;
+        yield return new WaitForSeconds(5);
+        spdMultiplier = 1;
     }
 }

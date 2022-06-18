@@ -396,7 +396,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 333316156}
   ball: {fileID: 2107332364}
-  magnitude: 1.25
+  spdMultiplier: 1.3
 --- !u!61 &238671136
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -684,13 +684,19 @@ MonoBehaviour:
   - {fileID: 238671132}
   - {fileID: 569774845}
   - {fileID: 1760408433}
-  maxBallPUList: 2
+  maxBallPUList: 0
   maxPaddleSpdPUList: 0
-  maxPaddleLengthPUList: 0
+  maxPaddleLengthPUList: 2
   spawnArea: {fileID: 1408542528}
   spawnBallPUInterval: 2
+  spawnPaddleSpdPUInterval: 3
+  spawnPaddleLengthPUInterval: 1
   despawnBallPUInterval: 5
+  despawnPaddleSpdPUInterval: 5
+  despawnPaddleLengthPUInterval: 5
   ballStartCoroutine: 0
+  paddleSpdStartCoroutine: 0
+  paddleLengthStartCoroutine: 0
 --- !u!1 &420620524
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,6 +786,8 @@ GameObject:
   m_Component:
   - component: {fileID: 569774846}
   - component: {fileID: 569774847}
+  - component: {fileID: 569774848}
+  - component: {fileID: 569774849}
   m_Layer: 0
   m_Name: PaddleSpeedUP
   m_TagString: Untagged
@@ -852,6 +860,49 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &569774848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569774845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e7d3b772fe84ed4ca4b963194b4a522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 333316156}
+  ball: {fileID: 2107332364}
+  paddleL: {fileID: 1624888441}
+  paddleR: {fileID: 908960558}
+  spdMultiplier: 2
+--- !u!61 &569774849
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569774845}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &740757342
 GameObject:
   m_ObjectHideFlags: 0
@@ -2111,6 +2162,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1760408434}
   - component: {fileID: 1760408435}
+  - component: {fileID: 1760408436}
+  - component: {fileID: 1760408437}
   m_Layer: 0
   m_Name: PaddleLengthUP
   m_TagString: Untagged
@@ -2183,6 +2236,49 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1760408436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760408433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61ed1f38ee6a54d44b4f663c1182a8a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 333316156}
+  ball: {fileID: 2107332364}
+  paddleL: {fileID: 1624888441}
+  paddleR: {fileID: 908960558}
+  lengthMultiplier: 2
+--- !u!61 &1760408437
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760408433}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1844260060
 GameObject:
   m_ObjectHideFlags: 0

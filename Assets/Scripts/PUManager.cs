@@ -10,97 +10,213 @@ public class PUManager : MonoBehaviour
     public List<GameObject> PUTemplate;
 
     //Menampung banyak clone dari komponen SpeedUp
-    private List<GameObject> BallPUList, PaddleSpdPUList, PaddleLengthPUList;
+    private List<GameObject> ballPUList, paddleSpdPUList, paddleLengthPUList;
     
     public int maxBallPUList, maxPaddleSpdPUList, maxPaddleLengthPUList;
 
     //Sebagai wadah spawn(?)
     public Transform spawnArea;
     
-    private float ballPUTimer;
-    public int spawnBallPUInterval, despawnBallPUInterval;
-    public Coroutine ballCoroutine;
+    private float ballPUTimer, paddleSpdPUTimer, paddleLengthPUTimer;
+    public int spawnBallPUInterval, spawnPaddleSpdPUInterval, spawnPaddleLengthPUInterval,
+            despawnBallPUInterval, despawnPaddleSpdPUInterval, despawnPaddleLengthPUInterval;
+    public Coroutine ballCoroutine, paddleSpdCoroutine, paddleLengthCoroutine;
 
     //untuk cek coroutine start
-    public bool ballStartCoroutine;
+    public bool ballStartCoroutine, paddleSpdStartCoroutine, paddleLengthStartCoroutine;
 
     void Start()
     {
-        BallPUList = new List<GameObject>();
+        ballPUList = new List<GameObject>();
+        paddleSpdPUList = new List<GameObject>();
+        paddleLengthPUList = new List<GameObject>();
         ballPUTimer = 0;
+        paddleSpdPUTimer = 0;
+        paddleLengthPUTimer = 0;
     }
 
     void Update()
     {
         ballPUTimer += Time.deltaTime;
+        paddleSpdPUTimer += Time.deltaTime;
+        paddleLengthPUTimer += Time.deltaTime;
 
         if (ballPUTimer > spawnBallPUInterval)
         {
-            GenerateRandomBallPU();
+            GenerateRandomBallPU(PUTemplate[0]);
             ballPUTimer -= spawnBallPUInterval;
+            
+        }
+
+        if (paddleSpdPUTimer > spawnPaddleSpdPUInterval)
+        {
+            GenerateRandomBallPU(PUTemplate[1]);
+            paddleSpdPUTimer -= spawnPaddleSpdPUInterval;
+            
+        }
+
+        if (paddleLengthPUTimer > spawnPaddleLengthPUInterval)
+        {
+            GenerateRandomBallPU(PUTemplate[2]);
+            paddleLengthPUTimer -= spawnBallPUInterval;
             
         }
     }
     
-    IEnumerator DespawnBall()
+    IEnumerator DespawnPU(GameObject powerUP)
     {
-        //
-        ballStartCoroutine = true;
-        Debug.Log("Enter Despawn Countdown");
-        yield return new WaitForSeconds(despawnBallPUInterval);
-        Debug.Log("After seconds");
-        RemoveBallPU(BallPUList[0]);
-        ballStartCoroutine = false;
+        if (powerUP == PUTemplate[0])
+        {
+            ballStartCoroutine = true;
+            
+            yield return new WaitForSeconds(despawnBallPUInterval);
+            
+            RemoveBallPU(ballPUList[0]);
+            ballStartCoroutine = false;
+        } 
+        else if (powerUP == PUTemplate[1])
+        {
+            paddleSpdStartCoroutine = true;
+            
+            yield return new WaitForSeconds(despawnBallPUInterval);
+            
+            RemovePaddleSpdPU(paddleSpdPUList[0]);
+            paddleSpdStartCoroutine = false;
+        } 
+        else if (powerUP == PUTemplate[2])
+        {
+            paddleLengthStartCoroutine = true;
+            
+            yield return new WaitForSeconds(despawnBallPUInterval);
+            
+            RemovePaddleLengthPU(paddleLengthPUList[0]);
+            paddleLengthStartCoroutine = false;
+        }
+        
     }
 
-    public void GenerateRandomBallPU()
+    public void GenerateRandomBallPU(GameObject powerUP)
     {
         GenerateRandomBallPU(new Vector3(Random.Range(PUAreaMin.x, PUAreaMax.x),
                                     Random.Range(PUAreaMin.y, PUAreaMax.y),
-                                    0));
+                                    0), powerUP);
     }
 
-    public void GenerateRandomBallPU(Vector3 position)
+    public void GenerateRandomBallPU(Vector3 position, GameObject powerUP)
     {
-        if (BallPUList.Count >= maxBallPUList)
-        {
-            return;
-        }
-
-        if (position.x < PUAreaMin.x ||
-        position.y < PUAreaMin.y ||
-        position.x > PUAreaMax.x ||
-        position.y > PUAreaMax.y)
+        if (!spawnLimitValidation(position, powerUP))
         {
             return;
         }
         
-        int randomIndex = Random.Range(0, BallPUList.Count);
+        GameObject PU = null;
     
-        GameObject ballPU = Instantiate(PUTemplate[randomIndex], position, Quaternion.identity, spawnArea);
-        ballPU.SetActive(true);
-
-        BallPUList.Add(ballPU);
-        
-        if (!ballStartCoroutine)
+        if (powerUP == PUTemplate[0])
         {
-            ballCoroutine = StartCoroutine(DespawnBall());
+            PU = Instantiate(PUTemplate[0], position, Quaternion.identity, spawnArea);
+            PU.SetActive(true);
+            ballPUList.Add(PU);
+            if (!ballStartCoroutine)
+            {
+                ballCoroutine = StartCoroutine(DespawnPU(powerUP));
+            }
+        } 
+        else if (powerUP == PUTemplate[1])
+        {
+            PU = Instantiate(PUTemplate[1], position, Quaternion.identity, spawnArea);
+            PU.SetActive(true);
+            paddleSpdPUList.Add(PU);
+            if (!paddleSpdStartCoroutine)
+            {
+                paddleSpdCoroutine = StartCoroutine(DespawnPU(powerUP));
+            }
+        } 
+        else if (powerUP == PUTemplate[2])
+        {
+            PU = Instantiate(PUTemplate[2], position, Quaternion.identity, spawnArea);
+            PU.SetActive(true);
+            paddleLengthPUList.Add(PU);
+            if (!paddleLengthStartCoroutine)
+            {
+                paddleLengthCoroutine = StartCoroutine(DespawnPU(powerUP));
+            }
+        } 
+        else
+        {
+            Debug.Log("Error GameObject. Null object found");
+            return;
         }
+        
+        
+    }
+
+    private bool spawnLimitValidation(Vector3 position, GameObject powerUP)
+    {
+        if (powerUP == PUTemplate[0])
+        {
+            if (ballPUList.Count >= maxBallPUList)
+            {
+                return false;
+            } 
+        } 
+        else if (powerUP == PUTemplate[1])
+        {
+            if (paddleSpdPUList.Count >= maxPaddleSpdPUList)
+            {
+                return false;
+            } 
+        } 
+        else if (powerUP == PUTemplate[2])
+        {
+            if (paddleLengthPUList.Count >= maxPaddleLengthPUList)
+            {
+                return false;
+            } 
+        }
+        
+        if (position.x < PUAreaMin.x ||
+            position.y < PUAreaMin.y ||
+            position.x > PUAreaMax.x ||
+            position.y > PUAreaMax.y)
+        {
+            return false;
+        } 
+        else 
+        {
+            return true;
+        }
+        
     }
 
     public void RemoveBallPU(GameObject PU)
     {
-        BallPUList.Remove(PU);
+        ballPUList.Remove(PU);
         Destroy(PU);
         ballStartCoroutine = false;
         StopCoroutine(ballCoroutine);
     }
 
+    public void RemovePaddleSpdPU(GameObject PU)
+    {
+        paddleSpdPUList.Remove(PU);
+        Destroy(PU);
+        paddleSpdStartCoroutine = false;
+        StopCoroutine(paddleSpdCoroutine);
+    }
+
+    public void RemovePaddleLengthPU(GameObject PU)
+    {
+        paddleLengthPUList.Remove(PU);
+        Destroy(PU);
+        paddleLengthStartCoroutine = false;
+        StopCoroutine(paddleLengthCoroutine);
+    }
+
     public void RemoveAllPU()
     {
-        while (BallPUList.Count > 0)
+        while (ballPUList.Count > 0)
         {
-            RemoveBallPU(BallPUList[0]);
+            RemoveBallPU(ballPUList[0]);
         }
     }
 }
