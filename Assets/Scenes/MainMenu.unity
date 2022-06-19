@@ -286,7 +286,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Author
+  m_Text: Credit
 --- !u!222 &510734870
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -865,7 +865,7 @@ GameObject:
   - component: {fileID: 1838187142}
   - component: {fileID: 1838187141}
   m_Layer: 5
-  m_Name: btn_author
+  m_Name: btn_credit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -937,7 +937,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1805005839}
         m_TargetAssemblyTypeName: MMenu, Assembly-CSharp
-        m_MethodName: btnAuthor
+        m_MethodName: btnCredit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
