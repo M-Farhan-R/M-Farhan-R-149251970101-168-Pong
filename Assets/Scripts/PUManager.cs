@@ -218,5 +218,23 @@ public class PUManager : MonoBehaviour
         {
             RemoveBallPU(ballPUList[0]);
         }
+
+        while (paddleSpdPUList.Count > 0)
+        {
+            RemovePaddleSpdPU(paddleSpdPUList[0]);
+        }
+
+        while (paddleLengthPUList.Count > 0)
+        {
+            RemovePaddleLengthPU(paddleLengthPUList[0]);
+        }
+        
+    }
+
+    public void ResetPUTimer()
+    {
+        ballPUTimer = 0;
+        paddleSpdPUTimer = 0;
+        paddleLengthPUTimer = 0;
     }
 }

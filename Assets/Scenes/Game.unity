@@ -684,13 +684,13 @@ MonoBehaviour:
   - {fileID: 238671132}
   - {fileID: 569774845}
   - {fileID: 1760408433}
-  maxBallPUList: 0
-  maxPaddleSpdPUList: 0
-  maxPaddleLengthPUList: 6
+  maxBallPUList: 2
+  maxPaddleSpdPUList: 1
+  maxPaddleLengthPUList: 1
   spawnArea: {fileID: 1408542528}
   spawnBallPUInterval: 2
   spawnPaddleSpdPUInterval: 3
-  spawnPaddleLengthPUInterval: 1
+  spawnPaddleLengthPUInterval: 4
   despawnBallPUInterval: 5
   despawnPaddleSpdPUInterval: 5
   despawnPaddleLengthPUInterval: 5
@@ -1309,7 +1309,7 @@ Transform:
   m_GameObject: {fileID: 908960558}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 10, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 2.5, z: 1}
+  m_LocalScale: {x: 0.25, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 1414721673}
   m_RootOrder: 1
@@ -1326,7 +1326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6847bab382d917a418fbe30385bca50a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
+  speed: 6
   up: 273
   down: 274
 --- !u!50 &908960562
@@ -2039,7 +2039,7 @@ Transform:
   m_GameObject: {fileID: 1624888441}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -10, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 2.5, z: 1}
+  m_LocalScale: {x: 0.25, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 1414721673}
   m_RootOrder: 0
@@ -2056,7 +2056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6847bab382d917a418fbe30385bca50a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
+  speed: 6
   up: 119
   down: 115
 --- !u!50 &1624888445

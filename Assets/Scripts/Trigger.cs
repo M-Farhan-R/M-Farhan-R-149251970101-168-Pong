@@ -25,9 +25,11 @@ public class Trigger : MonoBehaviour
             }
             paddle1.GetComponent<PaddleControl>().Reset();
             paddle2.GetComponent<PaddleControl>().Reset();
+            paddle1.GetComponent<PaddleControl>().ResetPaddlePU();
+            paddle2.GetComponent<PaddleControl>().ResetPaddlePU();
             ball.GetComponent<BallControl>().Reset();
             PUmanager.GetComponent<PUManager>().RemoveAllPU();
-            
+            PUmanager.ResetPUTimer();
         }
     }
     

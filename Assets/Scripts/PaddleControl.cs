@@ -10,7 +10,7 @@ public class PaddleControl : MonoBehaviour
     private Vector3 startPosition, startScale;
     private float spdMultiplier;
     public Coroutine paddleLengthCoroutine, paddleSpdCoroutine;
-    private bool paddleLengthStartCoroutine;
+    private bool paddleLengthStartCoroutine, paddleSpdStartCoroutine;
 
     // Start is called before the first frame update
     void Start()
@@ -65,20 +65,39 @@ public class PaddleControl : MonoBehaviour
         paddleLengthCoroutine = StartCoroutine(PaddleLengthUp(multiplier));
     }
 
-    public IEnumerator PaddleLengthUp(float multiplier)
+    public void startPaddleSpdUp(float multiplier)
+    {
+        if (paddleSpdStartCoroutine)
+        {
+            return;
+        }
+        paddleSpdCoroutine = StartCoroutine(PaddleSpeedUp(multiplier));
+    }
+
+    IEnumerator PaddleLengthUp(float multiplier)
     {
         paddleLengthStartCoroutine = true;
         transform.localScale *= multiplier;
         yield return new WaitForSeconds(5);
         transform.localScale = startScale;
-        Debug.Log(startPosition);
         paddleLengthStartCoroutine = false;
     }
 
     IEnumerator PaddleSpeedUp(float multiplier)
     {
+        paddleSpdStartCoroutine = true;
         spdMultiplier = multiplier;
         yield return new WaitForSeconds(5);
+        spdMultiplier = 1;
+        paddleSpdStartCoroutine = false;
+    }
+
+    public void ResetPaddlePU()
+    {
+        StopAllCoroutines();
+        paddleLengthStartCoroutine = false;
+        paddleSpdStartCoroutine = false;
+        transform.localScale = startScale;
         spdMultiplier = 1;
     }
 }

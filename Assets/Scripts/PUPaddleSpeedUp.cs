@@ -13,11 +13,12 @@ public class PUPaddleSpeedUp : MonoBehaviour
     {
         if (collision == ball)
         {
-            // paddleL.GetComponent<PaddleControl>().PaddleSpeedUp(spdMultiplier);
-            // paddleR.GetComponent<PaddleControl>().PaddleSpeedUp(spdMultiplier);
-            // manager.RemovePaddleSpdPU(gameObject);
-            // manager.paddleSpdStartCoroutine = false;
-            // manager.StopCoroutine(manager.paddleSpdCoroutine);
+            paddleL.GetComponent<PaddleControl>().startPaddleSpdUp(spdMultiplier);
+            paddleR.GetComponent<PaddleControl>().startPaddleSpdUp(spdMultiplier);
+            manager.RemovePaddleSpdPU(gameObject);
+            manager.paddleSpdStartCoroutine = false;
+            manager.StopCoroutine(manager.paddleSpdCoroutine);
+            
         }
     }
 }

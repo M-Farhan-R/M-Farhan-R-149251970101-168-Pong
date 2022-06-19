@@ -5,19 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class MMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
     public void btnPlay()
     {
         SceneManager.LoadScene("Game");
         Debug.Log("Created by M Farhan R - 149251970101-168");
     }
 
-    public void btnAuthor()
+    public void btnCredit()
     {
-        Debug.Log("Created by M Farhan R - 149251970101-168");
-        /*
-            Tapi nyontek gumgel + vid tutor
-        */
+        SceneManager.LoadScene("CreditScene");
     }
 
     public void btnExit()
